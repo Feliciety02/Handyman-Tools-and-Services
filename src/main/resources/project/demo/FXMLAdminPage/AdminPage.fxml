@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="674.0" prefWidth="1246.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.controllers.Admin.AdminPageController">
+   <children>
+      <VBox layoutX="20.0" layoutY="20.0" spacing="20.0">
+         <children>
+            <Label style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Admin Dashboard" />
+
+            <!-- Stats Cards -->
+            <HBox spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #4A90D9; -fx-background-radius: 15; -fx-padding: 15;">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Total Users" />
+                        <Label fx:id="totalUsersLabel" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #50C878; -fx-background-radius: 15; -fx-padding: 15;">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Total Orders" />
+                        <Label fx:id="totalOrdersLabel" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #FF8C00; -fx-background-radius: 15; -fx-padding: 15;">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Total Services" />
+                        <Label fx:id="totalServicesLabel" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #9B59B6; -fx-background-radius: 15; -fx-padding: 15;">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Total Products" />
+                        <Label fx:id="totalProductsLabel" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;" text="0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #E74C3C; -fx-background-radius: 15; -fx-padding: 15;">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Total Employees" />
+                        <Label fx:id="totalEmployeesLabel" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;" text="0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Management Buttons -->
+            <HBox spacing="15.0">
+               <children>
+                  <Button onAction="#handleManageUsers" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 10;" text="Manage Users" />
+                  <Button onAction="#handleManageProducts" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 10;" text="Manage Products" />
+                  <Button onAction="#handleManageServices" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 10;" text="Manage Services" />
+                  <Button onAction="#handleManageOrders" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 10;" text="Manage Orders" />
+                  <Button onAction="#handleManageEmployees" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-background-radius: 10;" text="Manage Employees" />
+               </children>
+            </HBox>
+
+            <!-- Content area for sub-views -->
+            <AnchorPane fx:id="contentPane" prefHeight="350.0" prefWidth="1100.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #dcdcdc; -fx-border-radius: 10;" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

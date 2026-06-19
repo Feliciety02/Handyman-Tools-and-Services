@@ -70,6 +70,9 @@
                 </Label>
                 <!-- Replacing TextField with PasswordField -->
                 <PasswordField fx:id="passwordField" prefHeight="51.0" prefWidth="341.0" style="-fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #67608f;" />
+                <HBox alignment="CENTER_RIGHT">
+                    <Button mnemonicParsing="false" onAction="#handleForgotPassword" style="-fx-background-color: transparent; -fx-text-fill: #3e66ff; -fx-font-size: 12px; -fx-underline: true;" text="Forgot Password?" />
+                </HBox>
             </VBox>
             <Label fx:id="warningLabel" alignment="CENTER" prefHeight="18.0" prefWidth="431.0" textFill="RED" visible="false">
                 <VBox.margin>

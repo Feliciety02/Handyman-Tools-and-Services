@@ -43,8 +43,9 @@
                    <Button fx:id="orderHistoryButton" onAction="#clickOrderHistory" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #E4EAEA;" text="Order History" />
                    <Button fx:id="serviceHistoryButton" onAction="#clickServiceHistory" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #E4EAEA;" text="Service History" />
                    <Button fx:id="addressesButton" onAction="#clickManageAddresses" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #E4EAEA;" text="Manage Addresses" />
-                  <Button fx:id="paymentMethodsButton" onAction="#clickPaymentMethods" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #E4EAEA;" text="Payment Methods" />
-               </children>
+                   <Button fx:id="paymentMethodsButton" onAction="#clickPaymentMethods" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #E4EAEA;" text="Payment Methods" />
+                   <Button fx:id="changePasswordButton" onAction="#clickChangePassword" prefHeight="50.0" prefWidth="160.0" style="-fx-background-color: #E4EAEA;" text="Change Password" />
+                </children>
                <padding>
                   <Insets bottom="10.0" top="10.0" />
                </padding>

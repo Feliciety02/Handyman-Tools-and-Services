@@ -15,6 +15,7 @@ public class UserSession {
     private final StringProperty username = new SimpleStringProperty();
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty contactNumber = new SimpleStringProperty();
+    private final StringProperty role = new SimpleStringProperty();
     private String userImagePath; // Stores the file path for the profile picture
 
     // Private constructor for Singleton pattern
@@ -59,6 +60,10 @@ public class UserSession {
         return contactNumber;
     }
 
+    public StringProperty roleProperty() {
+        return role;
+    }
+
     // Getters and setters for User ID
     public int getUserId() {
         return userId.get();
@@ -93,6 +98,23 @@ public class UserSession {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber.set(contactNumber);
+    }
+
+    // Getters and setters for Role
+    public String getRole() {
+        return role.get();
+    }
+
+    public void setRole(String role) {
+        this.role.set(role);
+    }
+
+    public boolean isAdmin() {
+        return "admin".equalsIgnoreCase(getRole());
+    }
+
+    public boolean isCustomer() {
+        return "customer".equalsIgnoreCase(getRole()) || getRole() == null;
     }
 
 
@@ -151,5 +173,13 @@ public class UserSession {
         setUsername(username);
         setEmail(email);
         setContactNumber(contactNumber);
+    }
+
+    public void populateSession(int userId, String username, String email, String contactNumber, String role) {
+        setUserId(userId);
+        setUsername(username);
+        setEmail(email);
+        setContactNumber(contactNumber);
+        setRole(role);
     }
 }

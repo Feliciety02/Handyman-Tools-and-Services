@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.image.Image;
@@ -24,6 +25,9 @@ public class MainStructureController {
     @FXML
     private Circle profileImageCircle;
 
+    @FXML
+    private Button adminButton;
+
     private String currentPage = "";
 
     @FXML
@@ -38,6 +42,11 @@ public class MainStructureController {
         System.out.println("[DEBUG] MainStructureController initialized.");
         loadPage("/project/demo/FXMLHomePage/HomePage.fxml");
         refreshProfileImage();
+        UserSession session = UserSession.getInstance();
+        if (session.isAdmin() && adminButton != null) {
+            adminButton.setVisible(true);
+            System.out.println("[INFO] Admin button shown for user: " + session.getUsername());
+        }
     }
 
     /**
@@ -147,6 +156,10 @@ public class MainStructureController {
 
     public void handleEmployeeClick(ActionEvent actionEvent) {
         loadPage("/project/demo/FXMLEmployeesPage/EmployeesPage.fxml");
+    }
+
+    public void handleAdminClick(ActionEvent actionEvent) {
+        loadPage("/project/demo/FXMLAdminPage/AdminPage.fxml");
     }
 
     /**

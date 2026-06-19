@@ -186,4 +186,9 @@
         public void clickPaymentMethods() {
             loadView("/project/demo/FXMLProfilePage/PaymentFXML/PaymentMethods.fxml");
         }
+
+        @FXML
+        public void clickChangePassword() {
+            loadView("/project/demo/FXMLProfilePage/ChangePassword.fxml");
+        }
     }

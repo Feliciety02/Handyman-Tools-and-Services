@@ -99,10 +99,13 @@ public class LogInPageController {
                 System.out.println("Login Success! Welcome!");
 
                 UserSession session = UserSession.getInstance();
-                session.setUserId(resultSet.getInt("id"));
-                session.setUsername(resultSet.getString("username"));
-                session.setEmail(resultSet.getString("email"));
-                session.setContactNumber(resultSet.getString("contact_number"));
+                session.populateSession(
+                    resultSet.getInt("id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("email"),
+                    resultSet.getString("contact_number"),
+                    resultSet.getString("role")
+                );
 
                 System.out.println("User session created for: " + session.getUsername());
 
@@ -226,5 +229,18 @@ public class LogInPageController {
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(emailRegex);
+    }
+
+    @FXML
+    private void handleForgotPassword() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/project/demo/FXMLLoginSignup/ForgotPassword.fxml"));
+            Stage stage = (Stage) emailOrUsernameField.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Forgot Password");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
