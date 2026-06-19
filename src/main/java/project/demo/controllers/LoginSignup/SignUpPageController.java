@@ -13,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import project.demo.DataBase.DatabaseConfig;
+import project.demo.utils.PasswordUtils;
+import project.demo.utils.ValidationUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -113,7 +115,23 @@ public class SignUpPageController {
 
     private void insertUserData(String username, String email, String password) {
         String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ? OR email = ?";
-        String insertQuery = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        String insertQuery = "INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, NOW())";
+
+        String sanitizedUsername = ValidationUtils.sanitize(username);
+        String sanitizedEmail = ValidationUtils.sanitize(email);
+
+        if (!ValidationUtils.isValidUsername(sanitizedUsername)) {
+            showWarning("Username must be 3-50 alphanumeric characters.");
+            return;
+        }
+        if (!ValidationUtils.isValidEmail(sanitizedEmail)) {
+            showWarning("Invalid email format.");
+            return;
+        }
+        if (!ValidationUtils.isValidPassword(password)) {
+            showWarning("Password must be 8+ chars with upper, lower, and a number.");
+            return;
+        }
 
         try (Connection connection = db.getConnection()) {
             if (connection == null) {
@@ -121,10 +139,9 @@ public class SignUpPageController {
                 return;
             }
 
-            // Check if username or email already exists
             PreparedStatement checkStmt = connection.prepareStatement(checkQuery);
-            checkStmt.setString(1, username);
-            checkStmt.setString(2, email);
+            checkStmt.setString(1, sanitizedUsername);
+            checkStmt.setString(2, sanitizedEmail);
 
             ResultSet resultSet = checkStmt.executeQuery();
             resultSet.next();
@@ -134,11 +151,12 @@ public class SignUpPageController {
                 return;
             }
 
-            // If not exists, insert the user data
+            String hashedPassword = PasswordUtils.hashPassword(password);
+
             PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
-            insertStmt.setString(1, username);
-            insertStmt.setString(2, email);
-            insertStmt.setString(3, password);
+            insertStmt.setString(1, sanitizedUsername);
+            insertStmt.setString(2, sanitizedEmail);
+            insertStmt.setString(3, hashedPassword);
 
             int rowsAffected = insertStmt.executeUpdate();
             if (rowsAffected > 0) {

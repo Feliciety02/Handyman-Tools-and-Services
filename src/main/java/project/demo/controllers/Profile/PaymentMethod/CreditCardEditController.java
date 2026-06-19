@@ -8,6 +8,7 @@ import project.demo.dao.CreditCardDAO;
 import project.demo.dao.CreditCardDAOImpl;
 import project.demo.models.CreditCard;
 import project.demo.models.UserSession;
+import project.demo.utils.EncryptionUtils;
 
 public class CreditCardEditController extends AbstractFormController<CreditCard> {
 
@@ -37,8 +38,8 @@ public class CreditCardEditController extends AbstractFormController<CreditCard>
         this.creditCard = creditCard;
         if (creditCard != null) {
             cardNameField.setText(creditCard.getCardName() != null ? creditCard.getCardName() : "");
-            cardNumberField.setText(creditCard.getCardNumber() != null ? creditCard.getCardNumber() : "");
-            cvvField.setText(creditCard.getCvv() != null ? creditCard.getCvv() : "");
+            cardNumberField.setText(creditCard.getCardNumber() != null ? EncryptionUtils.maskCardNumber(creditCard.getCardNumber()) : "");
+            cvvField.setText(creditCard.getCvv() != null ? EncryptionUtils.maskCvv(creditCard.getCvv()) : "");
             expiryField.setText(creditCard.getExpiry() != null ? creditCard.getExpiry() : "");
             billingAddressField.setText(creditCard.getBillingAddress() != null ? creditCard.getBillingAddress() : "");
             zipCodeField.setText(creditCard.getZipCode() != null ? creditCard.getZipCode() : "");

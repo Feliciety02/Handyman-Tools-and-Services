@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import project.demo.DataBase.DatabaseConfig;
 import project.demo.models.UserSession;
 
 import java.io.IOException;
@@ -16,10 +17,6 @@ public class OrderHistoryController {
     @FXML
     private GridPane shippingStatusGrid;
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/handyman_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
-
     private static final Logger logger = Logger.getLogger(OrderHistoryController.class.getName());
 
     @FXML
@@ -31,7 +28,7 @@ public class OrderHistoryController {
         String query = "SELECT order_id, order_date, total_price, shipping_status FROM orders WHERE user_id = ?";
         int userId = UserSession.getInstance().getUserId(); // Replace with actual user session
 
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, userId);

@@ -14,9 +14,10 @@ import project.demo.dao.PayPalDAO;
 import project.demo.dao.PayPalDAOImpl;
 import project.demo.models.*;
 
+import project.demo.DataBase.DatabaseConfig;
+
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -31,10 +32,6 @@ public class BookingPaymentController {
     private final GCashDAO gcashDAO = new GCashDAOImpl();
     private final CreditCardDAO creditCardDAO = new CreditCardDAOImpl();
     private final PayPalDAO payPalDAO = new PayPalDAOImpl();
-
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/handyman_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
 
     private BookingPageController mainController; // Reference to the main controller
     private String selectedPaymentMethod = "COD"; // Default payment method
@@ -76,7 +73,7 @@ public class BookingPaymentController {
                 "VALUES (?, ?, ?, ?, NOW(), ?, ?, 'Pending')";
         int bookingId = -1;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             double serviceFee = BookingPageController.getInstance().getSubtotal();
@@ -135,7 +132,7 @@ public class BookingPaymentController {
     private void insertBookedService(int serviceOrderId) {
         String query = "INSERT INTO booked_service (booking_id, service_name, job_complexity, service_fee) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             for (BookServiceItem item : BookServiceManager.getInstance().getBookedServices()) {

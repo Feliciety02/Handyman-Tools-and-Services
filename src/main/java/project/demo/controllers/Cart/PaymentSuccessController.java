@@ -15,6 +15,8 @@ import project.demo.controllers.Main.MainStructureController;
 import project.demo.models.CartManager;
 import project.demo.models.UserSession;
 
+import project.demo.DataBase.DatabaseConfig;
+
 import javafx.scene.image.WritableImage;
 import javafx.scene.SnapshotParameters;
 import javax.imageio.ImageIO;
@@ -77,10 +79,6 @@ public class PaymentSuccessController {
 
     @FXML
     private Label totalPriceLabel;
-
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/handyman_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
 
     private static final Logger logger = Logger.getLogger(PaymentSuccessController.class.getName());
 
@@ -162,7 +160,7 @@ public class PaymentSuccessController {
      */
     private void populateOrderItems(int orderId) {
         String query = "SELECT product_name, quantity, price FROM order_items WHERE order_id = ?";
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, orderId);

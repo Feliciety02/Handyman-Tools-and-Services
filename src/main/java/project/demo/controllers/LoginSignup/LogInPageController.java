@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import project.demo.DataBase.DatabaseConfig;
 import project.demo.models.UserSession;
+import project.demo.utils.PasswordUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,21 +79,25 @@ public class LogInPageController {
             return;
         }
 
-        // Query the database
-        String query = "SELECT * FROM users WHERE (email = ? OR username = ?) AND password = ?";
+        String query = "SELECT * FROM users WHERE email = ? OR username = ?";
         try (Connection connection = db.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, emailOrUsername);
             statement.setString(2, emailOrUsername);
-            statement.setString(3, password);
 
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                String storedPassword = resultSet.getString("password");
+
+                if (!PasswordUtils.checkPassword(password, storedPassword)) {
+                    handleIncorrectInputs(emailOrUsernameField, emailWarningImage, passwordField, passwordWarningImage);
+                    return;
+                }
+
                 System.out.println("Login Success! Welcome!");
 
-                // Populate UserSession
                 UserSession session = UserSession.getInstance();
                 session.setUserId(resultSet.getInt("id"));
                 session.setUsername(resultSet.getString("username"));
@@ -101,7 +106,6 @@ public class LogInPageController {
 
                 System.out.println("User session created for: " + session.getUsername());
 
-                // Navigate to the main application
                 navigateToPage("/project/demo/MainStructure.fxml", "Main Application");
             } else {
                 handleIncorrectInputs(emailOrUsernameField, emailWarningImage, passwordField, passwordWarningImage);

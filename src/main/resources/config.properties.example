@@ -1,0 +1,13 @@
+# Database Configuration
+db.host=localhost
+db.port=3306
+db.name=handyman_db
+db.user=root
+db.password=
+db.useSSL=false
+
+# Connection Pool
+pool.maxSize=10
+pool.minIdle=2
+pool.connectionTimeout=30000
+pool.idleTimeout=600000

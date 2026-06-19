@@ -16,9 +16,10 @@ import project.demo.dao.PayPalDAO;
 import project.demo.dao.PayPalDAOImpl;
 import project.demo.models.*;
 
+import project.demo.DataBase.DatabaseConfig;
+
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -31,10 +32,6 @@ public class PaymentController {
     private final GCashDAO gcashDAO = new GCashDAOImpl();
     private final CreditCardDAO creditCardDAO = new CreditCardDAOImpl();
     private final PayPalDAO payPalDAO = new PayPalDAOImpl();
-
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/handyman_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
 
     private CartPageController mainController; // Reference to the main controller
     private String selectedPaymentMethod = "COD"; // Default payment method
@@ -79,7 +76,7 @@ public class PaymentController {
         String query = "INSERT INTO orders (user_id, shipping_address, shipping_fee, shipping_method, shipping_note, payment_method, total_price, order_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
         int orderId = -1;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             double subtotal = CartPageController.getInstance().getSubtotal(); // Fetch subtotal from cart
@@ -109,7 +106,7 @@ public class PaymentController {
     private void insertOrderItems(int orderId) {
         String query = "INSERT INTO order_items (order_id, product_name, quantity, price) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             for (CartItem item : CartManager.getInstance().getCartItems()) {
