@@ -4,42 +4,50 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="297.0" prefWidth="201.0" spacing="5.0" style="-fx-border-width: 1; -fx-padding: 10; -fx-background-color: #E4EAEA; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.controllers.Shop.ProductCardController">
-    <ImageView fx:id="productImage" fitHeight="165.0" fitWidth="179.0" preserveRatio="true" styleClass="rounded-image">
-      <VBox.margin>
-         <Insets />
-      </VBox.margin></ImageView>
-    <Label fx:id="productName" alignment="CENTER" prefHeight="18.0" prefWidth="219.0" style="-fx-font-size: 14; -fx-font-weight: bold;" text="Product Name" textAlignment="CENTER">
-      <font>
-         <Font size="14.0" />
-      </font></Label>
-    <Label fx:id="productPrice" text="Price: $0.00">
-      <VBox.margin>
-         <Insets bottom="10.0" />
-      </VBox.margin>
-      <font>
-         <Font size="14.0" />
-      </font></Label>
-
-    <StackPane fx:id="cartPane" alignment="CENTER" prefHeight="31.0" prefWidth="160.0">
-
-        <!-- Add to Cart Button -->
-        <StackPane alignment="CENTER" prefHeight="48.0" prefWidth="222.0" stylesheets="@../styles.css">
-            <Button fx:id="addToCartButton" prefHeight="20.0" prefWidth="154.0" stylesheets="@../styles.css">
-                <font>
-                    <Font size="14.0" />
-                </font>
-                <VBox.margin>
-                    <Insets top="10.0" />
-                </VBox.margin>
-         </Button>
-            <Label fx:id="buttonText" alignment="CENTER" prefHeight="8.0" prefWidth="74.0" text="+ Add to Cart" />
-            <ImageView fx:id="cartIcon" fitHeight="41.0" fitWidth="43.0" layoutX="150" layoutY="100" opacity="0" visible="false" />
-        </StackPane>
-    </StackPane>
-
+<VBox alignment="CENTER" prefHeight="330.0" prefWidth="201.0" spacing="5.0" style="-fx-border-width: 1; -fx-padding: 10; -fx-background-color: #E4EAEA; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.controllers.Shop.ProductCardController">
+   <children>
+       <ImageView fx:id="productImage" fitHeight="140.0" fitWidth="179.0" preserveRatio="true" styleClass="rounded-image">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+       </ImageView>
+       <Label fx:id="productName" alignment="CENTER" prefHeight="18.0" prefWidth="219.0" style="-fx-font-size: 14; -fx-font-weight: bold;" text="Product Name" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <Label fx:id="productPrice" text="Price: $0.00">
+         <VBox.margin>
+            <Insets bottom="2.0" />
+         </VBox.margin>
+         <font>
+            <Font size="14.0" />
+         </font>
+       </Label>
+       <Label fx:id="ratingLabel" style="-fx-font-size: 11px; -fx-text-fill: #888888;" text="No reviews yet" />
+       <HBox alignment="CENTER" spacing="5.0">
+          <children>
+             <Button onAction="#handleViewReviews" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #FFD700; -fx-text-fill: black; -fx-font-size: 10px; -fx-background-radius: 5;" text="Reviews" />
+          </children>
+       </HBox>
+       <StackPane fx:id="cartPane" alignment="CENTER" prefHeight="31.0" prefWidth="160.0">
+           <StackPane alignment="CENTER" prefHeight="48.0" prefWidth="222.0" stylesheets="@../styles.css">
+               <Button fx:id="addToCartButton" prefHeight="20.0" prefWidth="154.0" stylesheets="@../styles.css">
+                   <font>
+                       <Font size="14.0" />
+                   </font>
+                   <VBox.margin>
+                       <Insets top="10.0" />
+                   </VBox.margin>
+               </Button>
+               <Label fx:id="buttonText" alignment="CENTER" prefHeight="8.0" prefWidth="74.0" text="+ Add to Cart" />
+               <ImageView fx:id="cartIcon" fitHeight="41.0" fitWidth="43.0" layoutX="150" layoutY="100" opacity="0" visible="false" />
+           </StackPane>
+       </StackPane>
+   </children>
 </VBox>

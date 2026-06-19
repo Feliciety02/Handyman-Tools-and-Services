@@ -2,6 +2,8 @@ package project.demo.controllers.Shop;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,7 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import project.demo.controllers.Review.ReviewListController;
+import project.demo.dao.ProductReviewDAO;
+import project.demo.dao.ProductReviewDAOImpl;
 import project.demo.models.CartManager;
 import project.demo.models.Product;
 
@@ -25,6 +32,9 @@ public class ProductCardController {
     private Label productPrice;
 
     @FXML
+    private Label ratingLabel;
+
+    @FXML
     private Button addToCartButton;
 
     @FXML
@@ -38,6 +48,7 @@ public class ProductCardController {
 
     private Product product;
     private boolean isGifLoaded = false;
+    private final ProductReviewDAO reviewDAO = new ProductReviewDAOImpl();
 
     public void initialize() {
         System.out.println("[DEBUG] ProductCardController initialized.");
@@ -52,11 +63,9 @@ public class ProductCardController {
     public void setProduct(Product product) {
         this.product = product;
 
-        // Set product details
         productName.setText(product.getName());
         productPrice.setText(product.getFormattedPrice());
 
-        // Load product image
         try {
             Image image = new Image(getClass().getResourceAsStream(product.getImagePath()));
             productImage.setImage(image);
@@ -64,7 +73,34 @@ public class ProductCardController {
             System.err.println("Failed to load image for product: " + product.getName());
         }
 
+        double avgRating = reviewDAO.getAverageRating(product.getId());
+        int reviewCount = reviewDAO.getReviewCount(product.getId());
+        if (reviewCount > 0) {
+            ratingLabel.setText(String.format("\u2605 %.1f (%d reviews)", avgRating, reviewCount));
+        } else {
+            ratingLabel.setText("No reviews yet");
+        }
+
         addToCartButton.setOnAction(event -> addToCart());
+    }
+
+    @FXML
+    private void handleViewReviews() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/demo/FXMLReviewPage/ReviewList.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Reviews: " + product.getName());
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            ReviewListController controller = loader.getController();
+            controller.setEntity(product.getId(), "product", product.getName());
+
+            stage.showAndWait();
+            setProduct(product);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void addToCart() {

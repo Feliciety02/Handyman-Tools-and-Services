@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefWidth="520.0" spacing="5.0" style="-fx-background-color: #f9f9f9; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 15;" xmlns="http://javafx.com/javafx/17.0.6">
+   <children>
+      <Label fx:id="userLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Username" />
+      <Label fx:id="ratingLabel" style="-fx-font-size: 14px; -fx-text-fill: #FFD700;" text="Rating" />
+      <Label fx:id="textLabel" style="-fx-font-size: 12px; -fx-text-fill: #333333;" text="Review text" wrapText="true" />
+   </children>
+</VBox>

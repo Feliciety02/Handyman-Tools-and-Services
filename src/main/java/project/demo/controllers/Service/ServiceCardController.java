@@ -2,12 +2,19 @@ package project.demo.controllers.Service;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import project.demo.controllers.Review.ReviewListController;
+import project.demo.dao.ServiceReviewDAO;
+import project.demo.dao.ServiceReviewDAOImpl;
 import project.demo.models.Service;
 import project.demo.models.BookServiceManager;
 import project.demo.models.BookServiceItem;
@@ -22,6 +29,9 @@ public class ServiceCardController {
 
     @FXML
     private Label servicePrice;
+
+    @FXML
+    private Label ratingLabel;
 
     @FXML
     private ImageView serviceImage;
@@ -40,6 +50,7 @@ public class ServiceCardController {
 
     private Service service;
     private boolean isGifLoaded = false;
+    private final ServiceReviewDAO reviewDAO = new ServiceReviewDAOImpl();
 
     /**
      * Initialize the controller with default behaviors.
@@ -64,6 +75,14 @@ public class ServiceCardController {
         serviceDescription.setText(service.getDescription());
         servicePrice.setText(service.getFormattedPrice());
 
+        double avgRating = reviewDAO.getAverageRating(service.getId());
+        int reviewCount = reviewDAO.getReviewCount(service.getId());
+        if (reviewCount > 0) {
+            ratingLabel.setText(String.format("\u2605 %.1f (%d reviews)", avgRating, reviewCount));
+        } else {
+            ratingLabel.setText("No reviews yet");
+        }
+
         // Load service image
         try {
             String imagePath = service.getImagePath();
@@ -74,6 +93,25 @@ public class ServiceCardController {
             }
         } catch (IllegalArgumentException e) {
             System.err.println("[ERROR] Invalid image path: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleViewReviews() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/demo/FXMLReviewPage/ReviewList.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Reviews: " + service.getName());
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            ReviewListController controller = loader.getController();
+            controller.setEntity(service.getId(), "service", service.getName());
+
+            stage.showAndWait();
+            setServiceDetails(service);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

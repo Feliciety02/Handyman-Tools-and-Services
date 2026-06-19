@@ -4,12 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="370.0" prefWidth="253.0" style="-fx-border-width: 1; -fx-padding: 15; -fx-background-color: #E4EAEA; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.controllers.Service.ServiceCardController">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="253.0" style="-fx-border-width: 1; -fx-padding: 15; -fx-background-color: #E4EAEA; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.controllers.Service.ServiceCardController">
    <VBox alignment="CENTER">
       <children>
           <ImageView fx:id="serviceImage" fitHeight="175.0" fitWidth="176.0" preserveRatio="true" styleClass="rounded-image" />
@@ -23,6 +24,12 @@
                   <Font size="16.0" />
               </font>
           </Label>
+          <Label fx:id="ratingLabel" style="-fx-font-size: 11px; -fx-text-fill: #888888;" text="No reviews yet" />
+          <HBox alignment="CENTER" spacing="5.0">
+             <children>
+                <Button onAction="#handleViewReviews" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #FFD700; -fx-text-fill: black; -fx-font-size: 10px; -fx-background-radius: 5;" text="Reviews" />
+             </children>
+          </HBox>
           <Label fx:id="serviceDescription" alignment="TOP_CENTER" prefHeight="61.0" prefWidth="182.0" style="-fx-font-size: 10; -fx-text-fill: gray;" text="Short description of the homeService" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
               <font>
                   <Font size="10.0" />
